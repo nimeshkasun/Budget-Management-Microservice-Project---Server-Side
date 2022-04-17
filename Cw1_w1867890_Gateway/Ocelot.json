@@ -1,0 +1,52 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/Category",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44314
+        }
+      ],
+      "UpstreamPathTemplate": "/api/CategoryService",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Category/{methodcall}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44314
+        }
+      ],
+      "UpstreamPathTemplate": "/api/CategoryService/{methodcall}",
+      "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Transaction",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ],
+      "UpstreamPathTemplate": "/api/TransactionService",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Transaction/{methodcall}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ],
+      "UpstreamPathTemplate": "/api/TransactionService/{methodcall}",
+      "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+    }
+  ]
+}
