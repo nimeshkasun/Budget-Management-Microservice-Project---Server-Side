@@ -14,7 +14,7 @@ namespace Cw1_w1867890_Transaction
         public String TranDescription { get; set; }
 
         public DateTime TranDate { get; set; }
-
+        
         public Boolean TranRecurring { get; set; }
 
         public Double TranAmount { get; set; }
