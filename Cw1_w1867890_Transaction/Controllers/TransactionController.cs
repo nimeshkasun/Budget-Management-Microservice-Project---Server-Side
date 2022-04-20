@@ -32,20 +32,7 @@ namespace Cw1_w1867890_Transaction.Controllers
         {
             return transactionDbContext.Transactions.ToList();
 
-        }
-
-        [HttpGet("transaction/search/{id}")]
-        public ActionResult<Transaction> SearchById(int id)
-        {
-            var tran = transactionDbContext.Transactions.Find(id);
-
-            if (tran == null)
-            {
-                return NotFound();
-            }
-
-            return tran;
-        }
+        }        
 
         [HttpPost("transaction/create")]
         public IActionResult Create(Transaction transaction)
@@ -61,6 +48,19 @@ namespace Cw1_w1867890_Transaction.Controllers
             this.transactionDbContext.SaveChanges();
 
             return Accepted();
+        }
+
+        [HttpGet("transaction/search/{id}")]
+        public ActionResult<Transaction> SearchById(int id)
+        {
+            var tran = transactionDbContext.Transactions.Find(id);
+
+            if (tran == null)
+            {
+                return NotFound();
+            }
+
+            return tran;
         }
 
         [HttpPut("transaction/update/{id}")]

@@ -36,19 +36,6 @@ namespace Cw1_w1867890_Category.Controllers
             
         }
 
-        [HttpGet("category/search/{id}")]
-        public ActionResult<Category> SearchById(int id)
-        {
-            var cat = categoryDbContext.Categories.Find(id);
-
-            if (cat == null)
-            {
-                return NotFound();
-            }
-
-            return cat;
-        }
-
         [HttpPost("category/create")]
         public IActionResult Create(Category category)
         {
@@ -61,6 +48,19 @@ namespace Cw1_w1867890_Category.Controllers
             this.categoryDbContext.SaveChanges();
 
             return Accepted();
+        }
+
+        [HttpGet("category/search/{id}")]
+        public ActionResult<Category> SearchById(int id)
+        {
+            var cat = categoryDbContext.Categories.Find(id);
+
+            if (cat == null)
+            {
+                return NotFound();
+            }
+
+            return cat;
         }
 
         [HttpPut("category/update/{id}")]
