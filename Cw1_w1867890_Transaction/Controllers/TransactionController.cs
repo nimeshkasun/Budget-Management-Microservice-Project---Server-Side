@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,14 +29,14 @@ namespace Cw1_w1867890_Transaction.Controllers
         }
 
         [HttpGet("transaction/search/all")]
-        public ActionResult<List<Transaction>> SearchAll()
+        public async Task<ActionResult<List<Transaction>>> SearchAll()
         {
-            return transactionDbContext.Transactions.ToList();
+            return await transactionDbContext.Transactions.ToListAsync();
 
         }        
 
         [HttpPost("transaction/create")]
-        public IActionResult Create(Transaction transaction)
+        public async Task<IActionResult> Create(Transaction transaction)
         {
             Transaction t = new Transaction();
             t.TranCatId = transaction.TranCatId;
@@ -45,15 +46,15 @@ namespace Cw1_w1867890_Transaction.Controllers
             t.TranAmount = Double.Parse(transaction.TranAmount.ToString());
 
             this.transactionDbContext.Transactions.Add(transaction);
-            this.transactionDbContext.SaveChanges();
+            await this.transactionDbContext.SaveChangesAsync();
 
             return Accepted();
         }
 
         [HttpGet("transaction/search/{id}")]
-        public ActionResult<Transaction> SearchById(int id)
+        public async Task<ActionResult<Transaction>> SearchById(int id)
         {
-            var tran = transactionDbContext.Transactions.Find(id);
+            var tran = await transactionDbContext.Transactions.FindAsync(id);
 
             if (tran == null)
             {
@@ -64,10 +65,10 @@ namespace Cw1_w1867890_Transaction.Controllers
         }
 
         [HttpPut("transaction/update/{id}")]
-        public IActionResult Update(int id, [FromBody] Transaction transaction)
+        public async Task<IActionResult> Update(int id, [FromBody] Transaction transaction)
         {
-            var dbTransaction = this.transactionDbContext.Transactions
-                .FirstOrDefault(s => s.TranId.Equals(id));
+            var dbTransaction = await this.transactionDbContext.Transactions
+                .FirstOrDefaultAsync(s => s.TranId.Equals(id));
 
             dbTransaction.TranCatId = transaction.TranCatId;
             dbTransaction.TranDescription = transaction.TranDescription;
@@ -75,7 +76,7 @@ namespace Cw1_w1867890_Transaction.Controllers
             dbTransaction.TranRecurring = transaction.TranRecurring;
             dbTransaction.TranAmount = transaction.TranAmount;
 
-            this.transactionDbContext.SaveChanges();
+            await this.transactionDbContext.SaveChangesAsync();
 
             return Accepted();
         }

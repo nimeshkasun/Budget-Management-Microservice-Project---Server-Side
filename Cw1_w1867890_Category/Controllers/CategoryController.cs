@@ -30,14 +30,14 @@ namespace Cw1_w1867890_Category.Controllers
         }
 
         [HttpGet("category/search/all")]
-        public ActionResult<List<Category>> SearchAll()
+        public async Task<ActionResult<List<Category>>> SearchAll()
         {
-            return categoryDbContext.Categories.ToList();
+            return await categoryDbContext.Categories.ToListAsync();
             
         }
 
         [HttpPost("category/create")]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             Category c = new Category();
             c.CatName = category.CatName;
@@ -45,15 +45,15 @@ namespace Cw1_w1867890_Category.Controllers
             c.CatBudget = Double.Parse(category.CatBudget.ToString());
 
             this.categoryDbContext.Categories.Add(category);
-            this.categoryDbContext.SaveChanges();
+            await this.categoryDbContext.SaveChangesAsync();
 
             return Accepted();
         }
 
         [HttpGet("category/search/{id}")]
-        public ActionResult<Category> SearchById(int id)
+        public async Task<ActionResult<Category>> SearchById(int id)
         {
-            var cat = categoryDbContext.Categories.Find(id);
+            var cat = await categoryDbContext.Categories.FindAsync(id);
 
             if (cat == null)
             {
@@ -64,29 +64,29 @@ namespace Cw1_w1867890_Category.Controllers
         }
 
         [HttpPut("category/update/{id}")]
-        public IActionResult Update(int id, [FromBody] Category category)
+        public async Task<IActionResult> Update(int id, [FromBody] Category category)
         {
-            var dbCategory = this.categoryDbContext.Categories
-                .FirstOrDefault(s => s.CatId.Equals(id));
+            var dbCategory = await this.categoryDbContext.Categories
+                .FirstOrDefaultAsync(s => s.CatId.Equals(id));
 
             dbCategory.CatName = category.CatName;
             dbCategory.CatType = category.CatType;
             dbCategory.CatBudget = category.CatBudget;
 
-            this.categoryDbContext.SaveChanges();
+            await this.categoryDbContext.SaveChangesAsync();
 
             return Accepted();
         }
 
         [HttpDelete("category/delete/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = this.categoryDbContext.Categories
-                .FirstOrDefault(s => s.CatId.Equals(id));
+            var category = await this.categoryDbContext.Categories
+                .FirstOrDefaultAsync(s => s.CatId.Equals(id));
             if (category == null)
                 return BadRequest();
             this.categoryDbContext.Remove(category);
-            this.categoryDbContext.SaveChanges();
+            await this.categoryDbContext.SaveChangesAsync();
 
             return Accepted();
         }
