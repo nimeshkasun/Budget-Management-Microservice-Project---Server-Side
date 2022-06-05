@@ -31,7 +31,7 @@ namespace Cw1_w1867890_Transaction.Controllers
         [HttpGet("transaction/search/all")]
         public async Task<ActionResult<List<Transaction>>> SearchAll()
         {
-            return await transactionDbContext.Transactions.ToListAsync();
+            return await transactionDbContext.Transactions.OrderByDescending(i => i.TranId).ToListAsync();
 
         }        
 
