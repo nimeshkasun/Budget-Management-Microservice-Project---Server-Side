@@ -32,7 +32,7 @@ namespace Cw1_w1867890_Category.Controllers
         [HttpGet("category/search/all")]
         public async Task<ActionResult<List<Category>>> SearchAll()
         {
-            return await categoryDbContext.Categories.ToListAsync();
+            return await categoryDbContext.Categories.OrderByDescending(i => i.CatId).ToListAsync();
             
         }
 
